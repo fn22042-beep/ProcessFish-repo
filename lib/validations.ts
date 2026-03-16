@@ -42,7 +42,10 @@ export const createOrderSchema = z.object({
   city: z.string().optional(),
   notes: z.string().optional(),
   items: z.array(orderItemSchema).min(1),
-  total: z.number().int().min(0),
+  total: z.number().min(0).transform((n) => Math.round(n)),
+  paymentMethod: z.enum(["card", "cod", "bkash", "nagad"]),
+  paymentIntentId: z.string().optional(),
+  transactionId: z.string().optional(),
 })
 
 export const contactSchema = z.object({

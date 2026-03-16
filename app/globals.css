@@ -1,91 +1,122 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@custom-variant dark (&:is(.dark *));
+@layer base {
+  :root {
+    /* Light theme – brand colors */
+    --background: 0 0% 100%;
+    --foreground: 232 26% 26%; /* approx #1B1F6F for text */
 
-:root {
-  --background: #ffffff;
-  --foreground: #1a1a2e;
-  --card: #ffffff;
-  --card-foreground: #1a1a2e;
-  --popover: #ffffff;
-  --popover-foreground: #1a1a2e;
-  --primary: #1B1F6F;
-  --primary-foreground: #ffffff;
-  --secondary: #f0f4ff;
-  --secondary-foreground: #1B1F6F;
-  --muted: #f5f7fa;
-  --muted-foreground: #64748b;
-  --accent: #F59E0B;
-  --accent-foreground: #1a1a2e;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #1B1F6F;
-  --chart-1: #1B1F6F;
-  --chart-2: #F59E0B;
-  --chart-3: #10b981;
-  --chart-4: #3b82f6;
-  --chart-5: #f97316;
-  --radius: 0.625rem;
-  --sidebar: #1B1F6F;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #F59E0B;
-  --sidebar-primary-foreground: #1a1a2e;
-  --sidebar-accent: #252a80;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #252a80;
-  --sidebar-ring: #F59E0B;
-}
+    --card: 0 0% 100%;
+    --card-foreground: 232 26% 26%;
 
-@theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+    --popover: 0 0% 100%;
+    --popover-foreground: 232 26% 26%;
+
+    /* Brand primary & accent (must match tailwind.config) */
+    --primary: 232 59% 27%; /* #1B1F6F */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 232 26% 26%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 42 96% 54%; /* #F59E0B */
+    --accent-foreground: 232 59% 27%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 232 59% 27%; /* focus ring in brand navy */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark theme */
+    --background: 232 45% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 232 45% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 232 45% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 232 59% 55%; /* lighter navy for dark bg */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217 33% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 42 96% 54%;
+    --accent-foreground: 232 59% 27%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 42 96% 54%;
+  }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold tracking-tight;
+    font-family: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman",
+      serif;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-md font-medium transition-colors;
+  }
+
+  .btn-outline {
+    @apply border border-primary text-primary hover:bg-primary hover:text-primary-foreground px-6 py-3 rounded-md font-medium transition-colors;
   }
 }

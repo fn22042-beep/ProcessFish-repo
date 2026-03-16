@@ -11,7 +11,7 @@ const navLinks = [
   { label: "Products", href: "/products" },
   { label: "Categories", href: "/#categories" },
   { label: "Our Process", href: "/#process" },
-  { label: "About Us", href: "/" },
+  { label: "About Us", href: "/#about" },
   { label: "Contact", href: "/#contact" },
 ]
 
@@ -20,16 +20,20 @@ export function Navbar() {
   const { totalItems } = useCart()
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
         {/* Logo */}
-        <Link href="#" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" aria-label="Processed Fish home">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent">
             <Fish className="h-5 w-5" style={{ color: "#1B1F6F" }} />
           </div>
           <div>
-            <span className="text-lg font-bold" style={{ color: "#1B1F6F" }}>Processe Fish</span>
-            <p className="text-[10px] leading-none text-accent font-medium tracking-wider uppercase">Premium All Fish</p>
+            <span className="text-lg font-bold" style={{ color: "#1B1F6F" }}>
+              Processed Fish
+            </span>
+            <p className="text-[10px] leading-none text-accent font-medium tracking-wider uppercase">
+              Premium Seafood
+            </p>
           </div>
         </Link>
 

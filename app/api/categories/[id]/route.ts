@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
 import { createCategorySchema } from "@/lib/validations"
 
 type Params = { params: Promise<{ id: string }> }

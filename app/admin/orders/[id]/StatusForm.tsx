@@ -2,6 +2,16 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface StatusFormProps {
   orderId: string;
@@ -40,36 +50,34 @@ export default function StatusForm({ orderId, currentStatus }: StatusFormProps) 
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow mb-6">
-      <h2 className="text-lg font-semibold mb-4">স্ট্যাটাস পরিবর্তন করুন</h2>
-      <form onSubmit={handleSubmit} className="flex items-end gap-4">
-        <div className="flex-1">
-          <label htmlFor="status" className="block text-sm font-medium mb-1">
-            নতুন স্ট্যাটাস নির্বাচন করুন
-          </label>
-          <select
-            id="status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="pending">অপেক্ষমাণ</option>
-            <option value="confirmed">কনফার্মড</option>
-            <option value="processing">প্রসেসিং</option>
-            <option value="shipped">শিপড</option>
-            <option value="delivered">ডেলিভারড</option>
-            <option value="cancelled">বাতিল</option>
-          </select>
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
-        >
-          {loading ? 'আপডেট হচ্ছে...' : 'আপডেট করুন'}
-        </button>
-      </form>
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Update Order Status</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="status">Select new status</Label>
+            <Select value={status} onValueChange={setStatus}>
+              <SelectTrigger id="status">
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="confirmed">Confirmed</SelectItem>
+                <SelectItem value="processing">Processing</SelectItem>
+                <SelectItem value="shipped">Shipped</SelectItem>
+                <SelectItem value="delivered">Delivered</SelectItem>
+                <SelectItem value="cancelled">Cancelled</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button type="submit" disabled={loading}>
+            {loading ? 'Updating...' : 'Update Status'}
+          </Button>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+        </form>
+      </CardContent>
+    </Card>
   );
 }

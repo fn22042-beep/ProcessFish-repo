@@ -1,5 +1,4 @@
-// Prisma schema for Processe Fish website
-// Run: npx prisma generate && npx prisma db push
+// Prisma schema for Processed Fish Ecommerce Website
 
 generator client {
   provider = "prisma-client-js"
@@ -14,94 +13,172 @@ model Category {
   id         String    @id @default(cuid())
   name       String
   slug       String    @unique
-  iconName   String?   // e.g. "Fish", "Snowflake" for lucide-react
-  countLabel String?   // e.g. "200+ varieties"
-  color      String?   // hex color
+  iconName   String?
+  countLabel String?
+  color      String?
   sortOrder  Int       @default(0)
+
   products   Product[]
+
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
 
 model Product {
   id            String    @id @default(cuid())
+
   name          String
   slug          String    @unique
+  description   String?
+
   categoryId    String
   category      Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
   image         String
-  images        String?   // JSON array of image URLs
+  images        String?   // JSON array
+
   rating        Float     @default(0)
   reviewsCount  Int       @default(0)
-  weights       String    // JSON array e.g. ["500g","1kg"]
-  price         Int       // in smallest currency unit (BDT poisha or taka as int)
-  originalPrice Int?      // for sale display
-  badge         String?   // e.g. "HOT", "20% OFF"
-  badgeColor    String?   // hex
-  description   String?
+
+  weights       String    // JSON ["500g","1kg"]
+
+  price         Int
+  originalPrice Int?
+
+  badge         String?
+  badgeColor    String?
+
   isFeatured    Boolean   @default(false)
   isOnSale      Boolean   @default(false)
+
+  stock         Int       @default(0)  // inventory stock
+
   sortOrder     Int       @default(0)
+
   orderItems    OrderItem[]
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
 
 model Order {
   id            String      @id @default(cuid())
-  orderNumber   String      @unique // human-readable e.g. PF-2026-0001
+
+  orderNumber   String      @unique
+
   customerName  String
   email         String
   phone         String
   address       String
   city          String?
   notes         String?
-  total         Int         // total in smallest unit
+
+  total         Int
+
   status        String      @default("pending") // pending, confirmed, processing, shipped, delivered, cancelled
+
   items         OrderItem[]
+  payments      Payment[]
+
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }
 
 model OrderItem {
   id        String   @id @default(cuid())
+
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
   productId String
   product   Product  @relation(fields: [productId], references: [id])
-  weight    String   // e.g. "1kg"
+
+  weight    String
   quantity  Int      @default(1)
-  price     Int      // unit price at order time
+
+  price     Int
+
   createdAt DateTime @default(now())
 }
 
 model Contact {
   id        String   @id @default(cuid())
+
   name      String
   email     String
   phone     String?
   subject   String?
   message   String
+
   read      Boolean  @default(false)
+
   createdAt DateTime @default(now())
 }
 
 model NewsletterSubscriber {
   id        String   @id @default(cuid())
+
   email     String   @unique
   active    Boolean  @default(true)
+
   createdAt DateTime @default(now())
 }
 
 model Testimonial {
   id        String   @id @default(cuid())
+
   name      String
-  role      String?  // e.g. "Loyal Customer"
+  role      String?
   rating    Int      @default(5)
+
   text      String
-  initials  String?  // e.g. "AK"
-  color     String?  // hex for avatar
+
+  initials  String?
+  color     String?
+
   sortOrder Int      @default(0)
+
   approved  Boolean  @default(true)
+
   createdAt DateTime @default(now())
+}
+
+model Delivery {
+  id        String   @id @default(cuid())
+
+  name      String
+  phone     String
+  area      String
+
+  status    String   @default("active")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id])
+
+  method        String   // COD or ONLINE
+
+  amount        Int
+
+  status        String   @default("pending") // pending, paid, failed
+
+  transactionId String?
+
+  createdAt     DateTime @default(now())
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+
+  key       String   @unique
+  value     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -33,7 +33,7 @@ export function CategoriesSection({ categories = [] }: { categories?: CategoryDa
             Shop By <span className="text-accent">Category</span>
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Discover our wide range of processed all Fish products, carefully categorized for your convenience
+            Discover our wide range of processed fish products, carefully categorized for your convenience.
           </p>
         </div>
 

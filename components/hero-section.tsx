@@ -13,7 +13,7 @@ export function HeroSection() {
           </div>
           <h1 className="font-serif text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Fresh From<br />
-            <span className="text-accent">Shop To Home chihen</span>
+            <span className="text-accent">Shop To Home Kitchen</span>
           </h1>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-blue-200 sm:text-lg">
             We process and deliver the finest quality fish directly from the Bay of Bengal. 
@@ -32,14 +32,17 @@ export function HeroSection() {
           {/* Stats */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-8 lg:justify-start">
             {[
-              { value: "50K+", label: "" },
-              { value: "200+", label: "" },
-              { value: "5*", label: "" },
-              { value: "24/7", label: "" },
+              { value: "50K+", label: "Happy Customers" },
+              { value: "200+", label: "Products" },
+              { value: "5★", label: "Average Rating" },
+              { value: "24/7", label: "Support" },
             ].map((stat) => (
-              <span key={stat.value} className="text-2xl font-bold text-white sm:text-3xl">
-                {stat.value}
-              </span>
+              <div key={stat.value} className="text-center">
+                <p className="text-2xl font-bold text-white sm:text-3xl">{stat.value}</p>
+                <p className="mt-1 text-xs font-medium tracking-wide text-blue-200 uppercase">
+                  {stat.label}
+                </p>
+              </div>
             ))}
           </div>
         </div>
@@ -49,7 +52,7 @@ export function HeroSection() {
           <div className="relative mx-auto w-[280px] sm:w-[360px] lg:w-[420px]">
             <Image
               src="/images.jpeg"
-              alt="Fresh premium fish from Processe Fish"
+              alt="Fresh premium fish from Processed Fish"
               width={420}
               height={420}
               className="rounded-2xl object-cover"

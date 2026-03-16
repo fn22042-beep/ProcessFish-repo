@@ -1,7 +1,7 @@
 // Server-only data access. Use in Server Components.
 // Returns empty arrays if DB is not available (e.g. before first run of db push).
 
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
 
 export interface ProductData {
   id: string

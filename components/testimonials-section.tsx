@@ -45,7 +45,7 @@ export function TestimonialsSection({ testimonials = [] }: { testimonials?: Test
               <div className="mt-5 flex items-center gap-3 border-t border-border pt-4">
                 <div
                   className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white"
-                  style={{ backgroundColor: t.color }}
+                  style={{ backgroundColor: t.color || "#1B1F6F" }}
                 >
                   {t.initials}
                 </div>

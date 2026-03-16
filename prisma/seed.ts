@@ -12,14 +12,14 @@ const categoriesData = [
 ]
 
 const productsData = [
-  { name: "Premium Hilsa Fish (Ilish)", categorySlug: "hilsa-ilish", image: "/images/products/Screen Shot 2024-06-19 at 12.34.56 PM.png", rating: 5, reviewsCount: 1045, weights: ["500g", "1kg", "2kg"], price: 1200, originalPrice: null, badge: "HOT", badgeColor: "#ef4444" },
-  { name: "Fresh Frozen Rui Fish", categorySlug: "frozen-fish", image: "/images/products/frozen-rui.jpg", rating: 4.5, reviewsCount: 520, weights: ["500g", "1kg", "2kg"], price: 480, originalPrice: 600, badge: "20% OFF", badgeColor: "#3b82f6" },
-  { name: "Dried Shutki Fish Pack", categorySlug: "dried-fish", image: "/images/products/dried-shutki.jpg", rating: 4.5, reviewsCount: 340, weights: ["250g", "500g"], price: 350, originalPrice: null, badge: "Fresh!", badgeColor: "#10b981" },
-  { name: "King Prawns (Bagda Chingri)", categorySlug: "shrimp-prawn", image: "/images/products/king-prawns.jpg", rating: 5, reviewsCount: 780, weights: ["500g", "1kg"], price: 950, originalPrice: null, badge: "15% OFF", badgeColor: "#f97316" },
-  { name: "Smoked Tilapia Fish", categorySlug: "smoked-fish", image: "/images/products/smoked-tilapia.jpg", rating: 4.5, reviewsCount: 317, weights: ["500g", "1kg"], price: 420, originalPrice: null, badge: "New", badgeColor: "#1B1F6F" },
-  { name: "Frozen Catla (Katla) Fish", categorySlug: "frozen-fish", image: "/images/products/frozen-katla.jpg", rating: 5, reviewsCount: 190, weights: ["1kg", "2kg", "5kg"], price: 520, originalPrice: null, badge: "Fresh!", badgeColor: "#10b981" },
-  { name: "River Prawn (Golda Chingri)", categorySlug: "shrimp-prawn", image: "/images/products/river-prawn.jpg", rating: 5, reviewsCount: 250, weights: ["250g", "500g", "1kg"], price: 1100, originalPrice: null, badge: "HOT", badgeColor: "#ef4444" },
-  { name: "Sun Dried Loitta Fish", categorySlug: "dried-fish", image: "/images/products/dried-loitta.jpg", rating: 4.5, reviewsCount: 145, weights: ["250g", "500g"], price: 280, originalPrice: null, badge: "15% OFF", badgeColor: "#f97316" },
+  { name: "Premium Hilsa Fish (Ilish)", categorySlug: "hilsa-ilish", image: "https://via.placeholder.com/400x300?text=Premium+Hilsa", rating: 5, reviewsCount: 1045, weights: ["500g", "1kg", "2kg"], price: 1200, originalPrice: null, badge: "HOT", badgeColor: "#ef4444" },
+  { name: "Fresh Frozen Rui Fish", categorySlug: "frozen-fish", image: "https://via.placeholder.com/400x300?text=Frozen+Rui", rating: 4.5, reviewsCount: 520, weights: ["500g", "1kg", "2kg"], price: 480, originalPrice: 600, badge: "20% OFF", badgeColor: "#3b82f6" },
+  { name: "Dried Shutki Fish Pack", categorySlug: "dried-fish", image: "https://via.placeholder.com/400x300?text=Dried+Shutki", rating: 4.5, reviewsCount: 340, weights: ["250g", "500g"], price: 350, originalPrice: null, badge: "Fresh!", badgeColor: "#10b981" },
+  { name: "King Prawns (Bagda Chingri)", categorySlug: "shrimp-prawn", image: "https://via.placeholder.com/400x300?text=King+Prawns", rating: 5, reviewsCount: 780, weights: ["500g", "1kg"], price: 950, originalPrice: null, badge: "15% OFF", badgeColor: "#f97316" },
+  { name: "Smoked Tilapia Fish", categorySlug: "smoked-fish", image: "https://via.placeholder.com/400x300?text=Smoked+Tilapia", rating: 4.5, reviewsCount: 317, weights: ["500g", "1kg"], price: 420, originalPrice: null, badge: "New", badgeColor: "#1B1F6F" },
+  { name: "Frozen Catla (Katla) Fish", categorySlug: "frozen-fish", image: "https://via.placeholder.com/400x300?text=Frozen+Katla", rating: 5, reviewsCount: 190, weights: ["1kg", "2kg", "5kg"], price: 520, originalPrice: null, badge: "Fresh!", badgeColor: "#10b981" },
+  { name: "River Prawn (Golda Chingri)", categorySlug: "shrimp-prawn", image: "https://via.placeholder.com/400x300?text=River+Prawn", rating: 5, reviewsCount: 250, weights: ["250g", "500g", "1kg"], price: 1100, originalPrice: null, badge: "HOT", badgeColor: "#ef4444" },
+  { name: "Sun Dried Loitta Fish", categorySlug: "dried-fish", image: "https://via.placeholder.com/400x300?text=Dried+Loitta", rating: 4.5, reviewsCount: 145, weights: ["250g", "500g"], price: 280, originalPrice: null, badge: "15% OFF", badgeColor: "#f97316" },
 ]
 
 const testimonialsData = [
@@ -61,6 +61,7 @@ async function main() {
         originalPrice: p.originalPrice,
         badge: p.badge,
         badgeColor: p.badgeColor,
+        stock: 50, // Default stock in kg
         sortOrder: i,
       },
       update: {

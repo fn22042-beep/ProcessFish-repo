@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
 import { createOrderSchema } from "@/lib/validations"
+import { sendOrderNotification } from '@/lib/notifications'
 
 async function generateOrderNumber(): Promise<string> {
   const year = new Date().getFullYear()
@@ -23,6 +24,21 @@ export async function POST(request: Request) {
     const data = parsed.data
     const orderNumber = await generateOrderNumber()
 
+    // Determine order and payment status based on payment method
+    let orderStatus = "pending"
+    let paymentStatus = "pending"
+    
+    if (data.paymentMethod === "card" && data.paymentIntentId) {
+      orderStatus = "confirmed"
+      paymentStatus = "completed"
+    } else if (data.paymentMethod === "cod") {
+      orderStatus = "confirmed"
+      paymentStatus = "pending" // Payment will be collected on delivery
+    } else if (data.paymentMethod === "bkash" || data.paymentMethod === "nagad") {
+      orderStatus = "pending" // Wait for payment confirmation
+      paymentStatus = "pending" // Will be verified by admin
+    }
+
     const order = await prisma.order.create({
       data: {
         orderNumber,
@@ -33,20 +49,36 @@ export async function POST(request: Request) {
         city: data.city ?? null,
         notes: data.notes ?? null,
         total: data.total,
-        status: "pending",
+        status: orderStatus,
         items: {
-          create: data.items.map((item) => ({
+          create: data.items.map((item: any) => ({
             productId: item.productId,
             weight: item.weight,
             quantity: item.quantity,
             price: item.price,
           })),
         },
+        payments: {
+          create: {
+            method: data.paymentMethod,
+            amount: data.total,
+            status: paymentStatus,
+            transactionId: data.transactionId || data.paymentIntentId || null,
+          },
+        },
       },
       include: {
         items: { include: { product: true } },
+        payments: true,
       },
     })
+
+    // Notify admin (email) about new order — best-effort, do not block response
+    try {
+      sendOrderNotification({ ...order, customerEmail: order.email })
+    } catch (e) {
+      console.error('notify admin failed', e)
+    }
 
     return NextResponse.json({
       id: order.id,

@@ -1,6 +1,17 @@
 // app/admin/orders/page.tsx
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 export default async function OrdersPage() {
   const orders = await prisma.order.findMany({
@@ -11,40 +22,56 @@ export default async function OrdersPage() {
   });
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">অর্ডারসমূহ</h1>
-      <div className="bg-white rounded shadow overflow-x-auto">
-        <table className="min-w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">অর্ডার নং</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">গ্রাহক</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ইমেইল</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">মোট মূল্য</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">তারিখ</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">স্ট্যাটাস</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">বিস্তারিত</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {orders.map((order) => (
-              <tr key={order.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{order.orderNumber}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order.customerName}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap">৳{order.total.toFixed(2)}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{new Date(order.createdAt).toLocaleDateString('bn-BD')}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order.status}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Link href={`/admin/orders/${order.id}`} className="text-blue-600 hover:underline">
-                    দেখুন
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold">Order Management</h1>
+        <p className="text-gray-500">Track and manage customer orders</p>
       </div>
+
+      <Card>
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Order ID</TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead>Items</TableHead>
+                <TableHead>Total</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orders.map((order) => (
+                <TableRow key={order.id}>
+                  <TableCell className="font-medium">{order.orderNumber}</TableCell>
+                  <TableCell>{order.customerName}</TableCell>
+                  <TableCell>{order.items.length}</TableCell>
+                  <TableCell>${order.total.toFixed(2)}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        order.status === 'delivered'
+                          ? 'default'
+                          : order.status === 'pending'
+                          ? 'destructive'
+                          : 'secondary'
+                      }
+                    >
+                      {order.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link href={`/admin/orders/${order.id}`}>View</Link>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 }

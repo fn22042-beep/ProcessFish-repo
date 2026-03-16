@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/db"
+import { prisma } from "@/lib/prisma"
 import { newsletterSchema } from "@/lib/validations"
 
 export async function POST(request: Request) {

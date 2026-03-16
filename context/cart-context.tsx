@@ -102,10 +102,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     () => items.reduce((sum, i) => sum + i.quantity, 0),
     [items]
   )
-  const totalAmount = useMemo(
-    () => items.reduce((sum, i) => sum + i.price * i.quantity, 0),
-    [items]
-  )
+  const totalAmount = useMemo(() => {
+    const parseWeight = (weight: string) => {
+      const numericValue = parseFloat(weight)
+      if (isNaN(numericValue)) return 1
+      const lower = weight.toLowerCase()
+      if (lower.includes("kg")) return numericValue
+      if (lower.includes("g") || lower.includes("গ্রাম")) return numericValue / 1000
+      return 1
+    }
+
+    const sum = items.reduce((sum, i) => {
+      const multiplier = parseWeight(i.weight)
+      return sum + i.price * multiplier * i.quantity
+    }, 0)
+
+    // We store totals as integer BDT in DB (Prisma Int)
+    return Math.round(sum)
+  }, [items])
 
   const value = useMemo(
     () => ({

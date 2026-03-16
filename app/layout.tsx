@@ -1,60 +1,50 @@
-import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Playfair_Display } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import { Toaster } from 'sonner'
-import { CartProvider } from '@/context/cart-context'
-import './globals.css'
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { ClientProviders } from "@/components/client-providers";
+import "./globals.css"; // ← গুরুত্বপূর্ণ: Tailwind CSS ইম্পোর্ট
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
-const _playfair = Playfair_Display({
+// ফন্ট কনফিগারেশন
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
+
+const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   weight: ["400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: 'Processe Fish - Fresh From Ocean To Table',
-  description: 'Premium processed seafood delivered fresh to your doorstep. Shop frozen fish, dried fish, smoked fish, shrimp & prawns.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
-}
 
+// ভিউপোর্ট
 export const viewport: Viewport = {
-  themeColor: '#1B1F6F',
-}
+  themeColor: "#1B1F6F",
+};
 
+// রুট লেআউট
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased ${_playfair.variable}`}>
-        <CartProvider>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable}`}
+    >
+      <body className="font-sans antialiased">
+        <ClientProviders>
           {children}
-          <Toaster />
-        </CartProvider>
+        </ClientProviders>
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

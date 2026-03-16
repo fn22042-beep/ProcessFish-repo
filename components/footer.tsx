@@ -6,18 +6,23 @@ const fishTypes = ["Hilsa / Ilish", "Catla Fish", "Dried Fish", "Shrimp & Prawn"
 
 export function Footer() {
   return (
-    <footer style={{ background: "linear-gradient(135deg, #1B1F6F 0%, #141752 100%)" }}>
+    <footer
+      id="contact"
+      style={{ background: "linear-gradient(135deg, #1B1F6F 0%, #141752 100%)" }}
+    >
       <div className="mx-auto max-w-7xl px-4 py-14 lg:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="#" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent">
                 <Fish className="h-5 w-5" style={{ color: "#1B1F6F" }} />
               </div>
               <div>
-                <span className="text-lg font-bold text-white">Processe Fish</span>
-                <p className="text-[10px] leading-none text-accent font-medium tracking-wider uppercase">Premium Seafood</p>
+                <span className="text-lg font-bold text-white">Processed Fish</span>
+                <p className="text-[10px] leading-none text-accent font-medium tracking-wider uppercase">
+                  Premium Seafood
+                </p>
               </div>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-blue-200">
@@ -95,7 +100,7 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-blue-300 sm:flex-row lg:px-8">
-          <p>2026  Processe Fish. All rights reserved.</p>
+          <p>2026 Processed Fish. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="#" className="hover:text-accent">Privacy</Link>
             <Link href="#" className="hover:text-accent">Terms</Link>
